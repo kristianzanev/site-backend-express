@@ -1,0 +1,31 @@
+{
+  "name": "site-backend-express",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watcher": "npx nodemon",
+    "start": "node app",
+    "build": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristianzanev/site-backend-express.git"
+  },
+  "author": "Kristian Zanev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kristianzanev/site-backend-express/issues"
+  },
+  "homepage": "https://github.com/kristianzanev/site-backend-express#readme",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
