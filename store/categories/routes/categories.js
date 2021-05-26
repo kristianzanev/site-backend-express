@@ -13,14 +13,14 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const categories = new Categories({
-        name: req.body.name,
+        ...req.body
     });
 
     try {
         const savedCategory = await categories.save()
         res.json(savedCategory);
     } catch(err) {
-        res.json({ stack: err.stack })
+        res.json({ error: err.message })
     }
 })
 
