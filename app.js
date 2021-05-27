@@ -3,9 +3,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const categoriesRoute = require('./store/categories/routes/categories');
+const categoriesRoute = require('./store/categories/routes/category');
 const dbURI = `mongodb+srv://Admin:${process.env.DATABASE_PASS}@cluster0.wiejv.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true});
 
 app.use(express.json()); // eliminates the need for body-parser
 app.get('/', (req, res) => res.send('use /api/ in the beginning of url'));

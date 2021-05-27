@@ -8,8 +8,15 @@ const schema = mongoose.Schema({
     },
     created_at: {
         type: Date,
-        default: Date.now()
+        immutable: true,
+        // default: Date.now(),
+        set(value) {
+            return Date.now(); // forcing only current first date
+          },
     }
-})
+});
 
-module.exports = mongoose.model('Categories', schema)
+
+// schema.pre('save', () => {console.warn('save')})
+
+module.exports = mongoose.model('Category', schema)
