@@ -1,12 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../models/Category')
+const Model = require('../models/Category')
 
 // getting all elements
 router.get('/', async (req, res) => {
     try {
-        const category = await Category.find();
-        res.json(category);
+        const model = await Model.find();
+        res.json(model);
+    } catch(err) {
+        res.status(400).json({ stack: err.message })
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const model = await Model.find();
+        res.json(model);
     } catch(err) {
         res.status(400).json({ stack: err.message })
     }
@@ -14,13 +23,13 @@ router.get('/', async (req, res) => {
 
 // posting an element
 router.post('/', async (req, res) => {
-    const category = new Category({
+    const model = new Model({
         ...req.body
     });
 
     try {
-        const savedCategory = await category.save()
-        res.json(savedCategory);
+        const savedModel = await model.save()
+        res.json(savedModel);
     } catch(err) {
         res.status(400).json({ error: err.message })
     }
@@ -29,7 +38,7 @@ router.post('/', async (req, res) => {
 // // updating an element
 // router.post('/', async (req, res) => {
 //     try {
-//         const updated = await Category.updateOne({...req.body})
+//         const updated = await Model.updateOne({...req.body})
 //         res.json(updated);
 //     } catch(err) {
 //         res.json({ error: err.message })
@@ -42,13 +51,13 @@ router.post('/', async (req, res) => {
 router.delete('/', async (req, res) => {
     try {
         const ids =[].concat(req.body._id);
-        const removedCategories = await Category.deleteMany({
+        const removedModel = await Model.deleteMany({
             _id: {
                 $in: ids
             }
         });
 
-        res.json(removedCategories);
+        res.json(removedModel);
     } catch(err) {
         res.status(400).json({ error: err.message })
     }
@@ -58,9 +67,9 @@ router.delete('/', async (req, res) => {
 router.get('/:nomer', async (req, res) => {
     try {
         const id = req.params.nomer // using request's PARAMS!
-        const category = await Category.findById(id);
+        const model = await Model.findById(id);
 
-        res.json(category);
+        res.json(model);
     } catch(err) {
 
         res.status(400).json({ error: err.message })
@@ -70,7 +79,7 @@ router.get('/:nomer', async (req, res) => {
 // updating an element from target url param (id)
 router.put("/:nomer", async (req, res) => {
     try {
-        const updated = await Category.updateMany({ _id: req.params.nomer }, req.body, { new: true })
+        const updated = await Model.updateMany({ _id: req.params.nomer }, req.body, { new: true })
         res.json(updated);
     } catch(err) {
         res.status(400).json({ error: err.message })
@@ -80,11 +89,11 @@ router.put("/:nomer", async (req, res) => {
 // deleting an element from target url param (id)
 router.delete('/:nomer', async (req, res) => {
     try {
-        const removedCategory = await Category.deleteOne({
+        const removedModel = await Model.deleteOne({
             _id: req.params.nomer // comming from the delete request 
         });
 
-        res.json(removedCategory);
+        res.json(removedModel);
     } catch(err) {
         res.status(400).json({ error: err.message })
     }
