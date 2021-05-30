@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema({
     created_at: {
         type: Date,
-        immutable: true,
         default: Date.now(),
     },
     updated_at: {

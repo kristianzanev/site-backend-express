@@ -1,24 +1,24 @@
 require('dotenv').config() // initializing .env variables
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const categoriesRoute = require('./store/categories/routes/category');
-const dbURI = `mongodb+srv://Admin:${process.env.DATABASE_PASS}@cluster0.wiejv.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true});
+const categoriesRoute = require('./store/categories/routes/route');
+const path = require('path');
+const port = process.env.PORT || 8080;
+
+mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true});
 
 app.use(express.json()); // eliminates the need for body-parser
-app.get('/', (req, res) => res.send('use /api/ in the beginning of url'));
 
-// app.get('/api/categories', async (req, res) => {
-//     try {
-//         const categories = await Categories.find();
-//         res.json(categories);
-//     } catch(err) {
-//         res.json({ stack: err.stack })
-//     }
-// })
+// used in production to serve client files
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+    });
+}
+
 app.use('/categories', categoriesRoute)
 
-app.listen(3000);
-console.log('running on 3000')
+app.listen(port);
+console.log('running on port: ' + port);
