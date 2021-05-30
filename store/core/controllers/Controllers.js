@@ -1,7 +1,7 @@
 class Controllers {
     constructor(Model) {
         this.Model = Model;
-        this.bound = { // bound functions can be destructured from the class and still have this.Model 
+        this.bound = { // bound functions can be destructured from the class and still have this.Model ('this' will be bound to the class not to the window)
             find: this.find.bind(this),
             findById: this.findById.bind(this),
             create: this.create.bind(this),
@@ -32,16 +32,25 @@ class Controllers {
         }
     }
 
-    create() {
-        // override it
-        // most props of a Model will be different and it isn't good practice to pass the whole req.body when creating an element
-        // so that's why this should be a custom method
+    async create (req, res)  {
+        const model = new this.Model(req.body.filtered);
+
+        try {
+            const savedModel = await model.save()
+            res.json(savedModel);
+        } catch(err) {
+            res.status(400).json({ error: err.message })
+        }
     }
 
-    update() {
-        // override it
-        // same rules from the create method applies here
-    }
+    async update(req, res)  {
+        try {
+            const updated = await this.Model.updateOne({ _id: req.body._id }, req.body.filtered)
+            res.json(updated);
+        } catch(err) {
+            res.json({ error: err.message });
+        }
+    };
 
     async deleteMany (req, res) {
         try {
