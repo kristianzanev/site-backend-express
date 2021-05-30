@@ -16,7 +16,7 @@ class Controllers {
             const model = await this.Model.find();
             res.json(model);
         } catch(err) {
-            res.status(400).json({ stack: err.message })
+            res.status(400).json({ error: err.message })
         }
     }
 
@@ -33,7 +33,7 @@ class Controllers {
     }
 
     async create (req, res)  {
-        const model = new this.Model(req.body.filtered);
+        const model = new this.Model(req.body);
 
         try {
             const savedModel = await model.save()
@@ -45,7 +45,8 @@ class Controllers {
 
     async update(req, res)  {
         try {
-            const updated = await this.Model.updateOne({ _id: req.body._id }, req.body.filtered)
+            const _id = req.body._id;
+            const updated = await this.Model.updateOne({ _id }, req.body)
             res.json(updated);
         } catch(err) {
             res.json({ error: err.message });
