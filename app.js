@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const categoriesRoute = require('./store/categories/routes/route');
+const usersRoute = require('./store/users/routes/route');
 const path = require('path');
 const port = process.env.PORT || 8080;
 
@@ -19,6 +20,13 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 app.use('/categories', categoriesRoute)
+app.use('/users', usersRoute)
+
+app.get('/',  (req, res) => {
+  const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  console.warn(fullUrl)
+})
 
 app.listen(port);
+
 console.log('running on port: ' + port);

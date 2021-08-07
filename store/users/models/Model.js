@@ -16,8 +16,8 @@ coreSchema.add({
     },
     password: {
         type: String,
-        required: [true, 'Please enter a valid password'],
-        minlength: [6, 'Minimum password length must be 6 characters']
+        required: [true, 'Please enter a password'],
+        minlength: [6, 'Minimum password length must be 6 characters'],
     },
 })
 

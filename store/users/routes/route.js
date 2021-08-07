@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { find, create, deleteById, findById, deleteMany, update } = require('../controllers/controllers')
+const { find, create, deleteById, findById, deleteMany, update } = require('../controllers/controllers');
+const ParseBody = require('../../core/middleWare/parseBody');
 const bodyParser = new ParseBody({allowedFields: ['name', 'password', 'email', '_id']}); // don't worry about _id field when creating mongoDB wouldn't validate other ids
 
 
@@ -11,7 +12,7 @@ router.get('/', find); // even crypted PASSWORDS shouldn't be public !!!!!
 router.get('/:id', findById) // even crypted PASSWORDS shouldn't be public !!!!!
 
 // creating an element
-router.post('/', bodyParser.checkFields, create); // using middleware for precation (don't want to create certain props from the body)
+router.post('/register', bodyParser.checkFields, create); // using middleware for precation (don't want to create certain props from the body)
 
 // updating an element
 router.put('/', bodyParser.checkFields, update); // using middleware for precation (don't want to update certain props from the body)

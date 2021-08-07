@@ -2,7 +2,7 @@ const express = require('express');
 const ParseBody = require('../../core/middleWare/parseBody');
 const router = express.Router();
 const { find, create, deleteById, findById, deleteMany, update } = require('../controllers/controllers')
-const bodyParser = new ParseBody({allowedFields: ['name', '_id']}); // don't worry about _id field when creating mongoDB wouldn't validate other ids
+const bodyParser = new ParseBody({allowedFields: ['name', '_id']}); // don't worry about the _id field when creating, mongoDB wouldn't validate other ids
 
 router.get('/', find);
 

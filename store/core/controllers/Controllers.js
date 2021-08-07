@@ -46,7 +46,7 @@ class Controllers {
     async update(req, res)  {
         try {
             const _id = req.body._id;
-            const updated = await this.Model.updateOne({ _id }, req.body)
+            const updated = await this.Model.updateOne({ _id }, req.body, { runValidators: true }) // runValidators is very important
             res.json(updated);
         } catch(err) {
             res.json({ error: err.message });
